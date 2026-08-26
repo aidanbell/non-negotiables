@@ -1,0 +1,7 @@
+{
+  "name": "editor",
+  "description": "EditorConfig only",
+  "files": [
+    { "from": "configs/editor/.editorconfig", "to": ".editorconfig" }
+  ]
+}

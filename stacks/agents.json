@@ -1,0 +1,7 @@
+{
+  "name": "agents",
+  "description": "AGENTS.md only",
+  "files": [
+    { "from": "configs/agents/AGENTS.md", "to": "AGENTS.md" }
+  ]
+}

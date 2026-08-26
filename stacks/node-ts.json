@@ -1,0 +1,33 @@
+{
+  "name": "node-ts",
+  "description": "Prettier, ESLint, TypeScript (Node), EditorConfig, AGENTS.md, Cursor rules",
+  "files": [
+    { "from": "configs/agents/AGENTS.md", "to": "AGENTS.md" },
+    { "from": "configs/editor/.editorconfig", "to": ".editorconfig" },
+    { "from": "configs/prettier/.prettierrc.json", "to": ".prettierrc.json" },
+    { "from": "configs/prettier/.prettierignore", "to": ".prettierignore" },
+    { "from": "configs/eslint/eslint.config.mjs", "to": "eslint.config.mjs" },
+    { "from": "configs/typescript/tsconfig.base.json", "to": "tsconfig.base.json" },
+    { "from": "configs/typescript/tsconfig.node.json", "to": "tsconfig.node.json" }
+  ],
+  "directories": [
+    { "from": "configs/cursor/rules", "to": ".cursor/rules" }
+  ],
+  "ensure": [
+    {
+      "to": "tsconfig.json",
+      "json": {
+        "extends": "./tsconfig.node.json",
+        "include": ["src"],
+        "exclude": ["node_modules", "dist"]
+      }
+    }
+  ],
+  "devDependencies": [
+    "prettier",
+    "eslint",
+    "typescript",
+    "typescript-eslint",
+    "@eslint/js"
+  ]
+}

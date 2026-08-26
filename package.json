@@ -1,0 +1,26 @@
+{
+  "name": "non-negotiables",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Personal non-negotiable configs to drop into projects",
+  "type": "module",
+  "bin": {
+    "non-negotiables": "./bin/install.js"
+  },
+  "exports": {
+    "./prettier": "./configs/prettier/.prettierrc.json",
+    "./tsconfig/base": "./configs/typescript/tsconfig.base.json",
+    "./tsconfig/node": "./configs/typescript/tsconfig.node.json",
+    "./tsconfig/bundler": "./configs/typescript/tsconfig.bundler.json",
+    "./tsconfig/dom": "./configs/typescript/tsconfig.dom.json"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "bin",
+    "configs",
+    "stacks",
+    "AGENTS.md"
+  ]
+}

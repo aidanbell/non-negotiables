@@ -1,0 +1,34 @@
+{
+  "name": "bundler",
+  "description": "Prettier, ESLint, TypeScript (bundler), EditorConfig, AGENTS.md, Cursor rules",
+  "files": [
+    { "from": "configs/agents/AGENTS.md", "to": "AGENTS.md" },
+    { "from": "configs/editor/.editorconfig", "to": ".editorconfig" },
+    { "from": "configs/prettier/.prettierrc.json", "to": ".prettierrc.json" },
+    { "from": "configs/prettier/.prettierignore", "to": ".prettierignore" },
+    { "from": "configs/eslint/eslint.config.mjs", "to": "eslint.config.mjs" },
+    { "from": "configs/typescript/tsconfig.base.json", "to": "tsconfig.base.json" },
+    { "from": "configs/typescript/tsconfig.bundler.json", "to": "tsconfig.bundler.json" },
+    { "from": "configs/typescript/tsconfig.dom.json", "to": "tsconfig.dom.json" }
+  ],
+  "directories": [
+    { "from": "configs/cursor/rules", "to": ".cursor/rules" }
+  ],
+  "ensure": [
+    {
+      "to": "tsconfig.json",
+      "json": {
+        "extends": "./tsconfig.bundler.json",
+        "include": ["src", "*.config.ts", "*.config.js", "*.config.mjs"],
+        "exclude": ["node_modules", "dist"]
+      }
+    }
+  ],
+  "devDependencies": [
+    "prettier",
+    "eslint",
+    "typescript",
+    "typescript-eslint",
+    "@eslint/js"
+  ]
+}
