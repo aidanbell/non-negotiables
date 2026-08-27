@@ -3,6 +3,7 @@
   "description": "Prettier, ESLint, TypeScript (bundler), EditorConfig, AGENTS.md, Cursor rules",
   "files": [
     { "from": "configs/agents/AGENTS.md", "to": "AGENTS.md" },
+    { "from": "configs/agents/CLAUDE.md", "to": "CLAUDE.md" },
     { "from": "configs/editor/.editorconfig", "to": ".editorconfig" },
     { "from": "configs/prettier/.prettierrc.json", "to": ".prettierrc.json" },
     { "from": "configs/prettier/.prettierignore", "to": ".prettierignore" },
@@ -25,10 +26,14 @@
     }
   ],
   "devDependencies": [
-    "prettier",
-    "eslint",
     "typescript",
+    "eslint",
+    "@eslint/js",
     "typescript-eslint",
-    "@eslint/js"
+    "prettier",
+    "eslint-config-prettier",
+    "@stylistic/eslint-plugin",
+    "eslint-plugin-import-x",
+    "eslint-import-resolver-typescript"
   ]
 }

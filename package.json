@@ -21,6 +21,7 @@
     "bin",
     "configs",
     "stacks",
+    "versions.json",
     "AGENTS.md"
   ]
 }

@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const STACKS_DIR = join(ROOT, "stacks");
+const VERSIONS = JSON.parse(readFileSync(join(ROOT, "versions.json"), "utf8"));
 const SKIP_NAMES = new Set([".gitkeep", ".DS_Store"]);
 
 function parseArgs(argv) {
@@ -149,6 +150,48 @@ function applyStack(stack, dest, flags) {
   return counts;
 }
 
+function parseVersion(spec) {
+  const match = String(spec).match(/(\d+)\.(\d+)/);
+  if (!match) return null;
+  return { major: Number(match[1]), minor: Number(match[2]) };
+}
+
+function isBelowFloor(installed, floor) {
+  if (!installed || !floor) return false;
+  return installed.major < floor.major || (installed.major === floor.major && installed.minor < floor.minor);
+}
+
+function warnIfTooOld(dest) {
+  const pkgPath = join(dest, "package.json");
+  if (!exists(pkgPath)) return;
+
+  const pkg = JSON.parse(readFileSync(pkgPath, "utf8"));
+  const deps = { ...pkg.dependencies, ...pkg.devDependencies };
+  const stale = [];
+
+  for (const [name, floor] of Object.entries(VERSIONS.floors ?? {})) {
+    const spec = deps[name];
+    if (!spec) continue;
+    if (isBelowFloor(parseVersion(spec), floor)) {
+      stale.push(`${name}@${spec} (need >= ${floor.major}.${floor.minor})`);
+    }
+  }
+
+  if (stale.length === 0) return;
+  console.log("\nThis project is below the supported toolchain:");
+  for (const line of stale) console.log(`  ${line}`);
+  console.log(VERSIONS.unsupported);
+}
+
+function printInstallHint(stack) {
+  if (!stack.devDependencies?.length) return;
+  const specs = stack.devDependencies.map((name) => {
+    const range = VERSIONS.devDependencies?.[name];
+    return range ? `${name}@"${range}"` : name;
+  });
+  console.log(`\nRequires Node ${VERSIONS.node}. Suggested packages:\n  npm i -D ${specs.join(" ")}`);
+}
+
 function main() {
   const args = parseArgs(process.argv);
   const stacks = loadStacks();
@@ -175,10 +218,8 @@ function main() {
     .map(([k, n]) => `${n} ${k}`)
     .join(", ");
   console.log(summary ? `Done. ${summary}.` : "Done. Nothing to copy.");
-
-  if (stack.devDependencies?.length) {
-    console.log(`\nSuggested packages:\n  npm i -D ${stack.devDependencies.join(" ")}`);
-  }
+  warnIfTooOld(args.dest);
+  printInstallHint(stack);
 }
 
 try {

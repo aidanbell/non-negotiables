@@ -14,3 +14,4 @@ This repository is a file cabinet of personal non-negotiables: Prettier, ESLint,
 - The installer must never overwrite existing files unless `--force` is passed.
 - Skip adding template engines, publish pipelines, or extra packages unless the user asks.
 - When adding a new config, also add or update a stack that installs it, and mention it in the README.
+- Toolchain floors live in `versions.json`. Do not use APIs that require a newer TypeScript, ESLint, or Prettier than that file allows. Do not add a legacy (ESLint 8 / `.eslintrc`) parallel config.

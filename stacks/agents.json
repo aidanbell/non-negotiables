@@ -2,6 +2,7 @@
   "name": "agents",
   "description": "AGENTS.md only",
   "files": [
-    { "from": "configs/agents/AGENTS.md", "to": "AGENTS.md" }
+    { "from": "configs/agents/AGENTS.md", "to": "AGENTS.md" },
+    { "from": "configs/agents/CLAUDE.md", "to": "CLAUDE.md" }
   ]
 }
